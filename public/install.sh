@@ -22,4 +22,28 @@ git clone "$repository" "$directory"
 mv "$env_file" "$directory/.env"
 trap - EXIT
 cd "$directory"
+npm ci
+
+printf '\nFor local Stripe webhooks, open another terminal and run:\n  stripe listen --forward-to http://localhost:8787/api/billing/stripe/webhook\n'
+read -r -p "Paste the whsec_ webhook signing secret (or press Enter to skip Stripe): " stripe_secret
+if [[ -n "$stripe_secret" ]]; then
+  STRIPE_SECRET_VALUE="$stripe_secret" node -e '
+    const fs = require("fs"); const p = ".env"; let s = fs.readFileSync(p, "utf8");
+    const line = `STRIPE_WEBHOOK_SECRET=${process.env.STRIPE_SECRET_VALUE}`;
+    s = /^STRIPE_WEBHOOK_SECRET=.*$/m.test(s) ? s.replace(/^STRIPE_WEBHOOK_SECRET=.*$/m, line) : `${s}\n${line}\n`;
+    fs.writeFileSync(p, s);
+  '
+fi
+
+sdk_root="${ANDROID_SDK_ROOT:-${HOME:-}/Android/Sdk}"
+adb="$sdk_root/platform-tools/adb"
+emulator="$sdk_root/emulator/emulator"
+if [[ -x "$adb" && -x "$emulator" ]]; then
+  "$adb" start-server
+  if ! "$adb" devices | grep -q 'emulator-5554[[:space:]]\+\(device\|offline\)'; then
+    "$emulator" -avd "${SULPHUR_AVD_NAME:-Sulphur_API_30}" -no-snapshot -no-audio -no-boot-anim -gpu host -port 5554 >/dev/null 2>&1 &
+  fi
+else
+  echo "Android SDK/emulator not found. Install Android Studio and create Sulphur_API_30; the web app will still start." >&2
+fi
 npm run local

@@ -92,7 +92,7 @@ You do not need to manually start ADB or the emulator. Sulphur starts the local 
 
 ### Private one-command bootstrap
 
-The Vercel deployment can serve an installer that clones the project, requests the private installer password, writes the managed `.env`, and starts Sulphur. The password and environment bundle are Vercel production environment variables; they are never committed to Git or sent to the browser.
+The Vercel deployment can serve an installer that clones the project, requests the private installer password, writes the managed `.env`, installs locked dependencies, starts ADB and the configured emulator, runs migrations, and starts the API, CoTester queue worker, and frontend. The queue worker is part of the API process. During setup it asks you to run Stripe's `stripe listen` command in another terminal and paste its `whsec_...` signing secret. The password and environment bundle are Vercel production environment variables; they are never committed to Git or sent to the browser.
 
 PowerShell:
 
