@@ -1752,7 +1752,10 @@ function McpSetupDialog({ sessionId }: { sessionId: string }) {
   const [commandOpen, setCommandOpen] = useState(false);
   useEffect(() => { getMcpSettings().then((settings) => setSelectedId(settings.defaultConnector)).catch(() => undefined); }, []);
   const selected = connectors.find((connector) => connector.id === selectedId) ?? connectors[0];
-  const launcher = `npx -y @sulphur-ai/mcp --project "C:\\Users\\razin\\Desktop\\Products\\Sulphur" --session ${sessionId}`;
+  // Launch the workspace copy directly. `npx` can spend longer downloading a
+  // package than Codex allows an optional MCP server to start, which makes a
+  // first-run connection look broken even though the server itself is healthy.
+  const launcher = `node "C:\\Users\\razin\\Desktop\\Products\\Sulphur\\packages\\sulphur-mcp\\bin\\sulphur-mcp.mjs" --project "C:\\Users\\razin\\Desktop\\Products\\Sulphur" --session ${sessionId}`;
   const commands: Record<string, string> = {
     codex: `codex mcp add sulphur -- ${launcher}`,
     claude: `claude mcp add sulphur --scope project -- ${launcher}`,

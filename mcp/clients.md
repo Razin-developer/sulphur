@@ -7,7 +7,7 @@ send your APK, database URL, OAuth keys, or ADB address to npm.
 ## Codex CLI
 
 ```powershell
-codex mcp add sulphur -- npx -y @sulphur-ai/mcp --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
+codex mcp add sulphur -- node "C:\Users\razin\Desktop\Products\Sulphur\packages\sulphur-mcp\bin\sulphur-mcp.mjs" --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
 codex mcp list
 ```
 
@@ -16,14 +16,14 @@ Use `/mcp` in Codex to check that Sulphur is connected.
 ## Claude Code
 
 ```powershell
-claude mcp add sulphur --scope project -- npx -y @sulphur-ai/mcp --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
+claude mcp add sulphur --scope project -- node "C:\Users\razin\Desktop\Products\Sulphur\packages\sulphur-mcp\bin\sulphur-mcp.mjs" --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
 claude mcp get sulphur
 ```
 
 ## Gemini CLI
 
 ```powershell
-gemini mcp add --scope project sulphur npx -y @sulphur-ai/mcp --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
+gemini mcp add --scope project sulphur node "C:\Users\razin\Desktop\Products\Sulphur\packages\sulphur-mcp\bin\sulphur-mcp.mjs" --project "C:\Users\razin\Desktop\Products\Sulphur" --session "SESSION_ID"
 gemini mcp list
 ```
 
@@ -35,10 +35,9 @@ launcher for the selected client.
 
 ```json
 {
-  "command": "npx",
+  "command": "node",
   "args": [
-    "-y",
-    "@sulphur-ai/mcp",
+    "C:\\Users\\razin\\Desktop\\Products\\Sulphur\\packages\\sulphur-mcp\\bin\\sulphur-mcp.mjs",
     "--project",
     "C:\\Users\\razin\\Desktop\\Products\\Sulphur",
     "--session",
