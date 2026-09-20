@@ -1,0 +1,19 @@
+# Template only: start this on a Linux host that exposes /dev/kvm. Each
+# session gets its own generated compose project/network; never use this file
+# as a shared long-lived worker or publish ADB/gRPC ports to the browser.
+services:
+  android-worker:
+    image: ${SULPHUR_ANDROID_WORKER_IMAGE:?Set a signed worker image digest}
+    read_only: true
+    privileged: false
+    network_mode: none
+    devices:
+      - /dev/kvm:/dev/kvm
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=2g
+    volumes:
+      - ${SULPHUR_ARTIFACT_PATH:?Use a private reviewed APK path}:/input/app.apk:ro

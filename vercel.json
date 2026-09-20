@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci",
+  "buildCommand": "VITE_MARKETING_ONLY=true npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/auth/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/dashboard/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/apps/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/cotester/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/sessions/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/settings/:path*", "destination": "/resources/contact", "permanent": false },
+    { "source": "/admin/:path*", "destination": "/resources/contact", "permanent": false }
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

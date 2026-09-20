@@ -1,0 +1,34 @@
+import { BookOpen, CheckCircle2, ChevronRight, Command, Copy, FileArchive, Search, Terminal } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandShortcut } from '../@/components/ui/command'
+import { Button, Card } from './components/ui'
+import { SiteNav } from './components/site-nav'
+
+const docs = [
+  { group: 'Get started', slug: 'introduction', title: 'Introduction', description: 'What Sulphur is and the boundaries it is designed around.' },
+  { group: 'Get started', slug: 'quickstart', title: 'Quickstart', description: 'Create a workspace and prepare your first Android test session.' },
+  { group: 'Get started', slug: 'install', title: 'Install the MCP connector', description: 'Connect an approved agent to a running Sulphur session.' },
+  { group: 'Core concepts', slug: 'workspaces', title: 'Workspaces and APKs', description: 'How APKs are organized and stored privately.' },
+  { group: 'Core concepts', slug: 'sessions', title: 'Android sessions', description: 'Isolation, lifecycle controls, and the live session view.' },
+  { group: 'Core concepts', slug: 'policies', title: 'Action policies', description: 'Allow, confirm, and blocked actions for agents.' },
+  { group: 'Guides', slug: 'agent-setup', title: 'Set up an agent', description: 'Scope an MCP connection to a specific Android session.' },
+  { group: 'Guides', slug: 'review', title: 'Review agent activity', description: 'Use screen state and audit events to understand outcomes.' },
+  { group: 'Reference', slug: 'mcp', title: 'MCP tools', description: 'The fixed, session-scoped tool surface.' },
+  { group: 'Reference', slug: 'security', title: 'Security model', description: 'Isolation, network boundaries, and human approval.' },
+]
+
+function Kbd({ children }: { children: string }) { return <kbd className="docs-kbd">{children}</kbd> }
+
+export function DocsPage({ signedIn = false }: { signedIn?: boolean }) {
+  const { slug = 'introduction' } = useParams()
+  const navigate = useNavigate()
+  const [searchOpen, setSearchOpen] = useState(false)
+  const page = docs.find((doc) => doc.slug === slug) ?? docs[0]
+  const grouped = useMemo(() => Array.from(new Set(docs.map((doc) => doc.group))).map((group) => [group, docs.filter((doc) => doc.group === group)] as const), [])
+  useEffect(() => { const onKeyDown = (event: KeyboardEvent) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); setSearchOpen(true) } if (event.key === '/' && document.activeElement === document.body) { event.preventDefault(); setSearchOpen(true) } }; window.addEventListener('keydown', onKeyDown); return () => window.removeEventListener('keydown', onKeyDown) }, [])
+  const open = (next: string) => { setSearchOpen(false); navigate(`/docs/${next}`) }
+  return <main className="min-h-screen bg-white text-[#292a24]"><SiteNav signedIn={signedIn} active="docs" /><div className="docs-layout"><aside className="docs-sidebar"><a className="docs-overview" href="/docs"><BookOpen className="size-4" />Documentation</a><button onClick={() => setSearchOpen(true)} className="docs-search"><Search className="size-4" /><span>Search docs</span><span className="ml-auto flex gap-1"><Kbd>⌘</Kbd><Kbd>K</Kbd></span></button><nav>{grouped.map(([group, items]) => <div className="docs-nav-group" key={group}><p>{group}</p>{items.map((item) => <a key={item.slug} className={item.slug === page.slug ? 'active' : ''} href={`/docs/${item.slug}`}>{item.title}</a>)}</div>)}</nav></aside><article className="docs-article"><div className="docs-breadcrumb"><a href="/docs">Docs</a><ChevronRight className="size-3" /><span>{page.group}</span></div><h1>{page.title}</h1><p className="docs-intro">{page.description}</p>{page.slug === 'introduction' ? <><Card className="docs-callout"><CheckCircle2 className="size-5" /><div><strong>Start with an authorized APK.</strong><p>Sulphur is designed for Android apps your team is permitted to inspect and test. It is not a route to production access or unrestricted device control.</p></div></Card><h2>How Sulphur works</h2><p>Sulphur prepares an isolated Android environment for one uploaded APK. A person chooses the session policy, then connects an approved MCP client to a narrowly scoped tool surface.</p><div className="docs-steps"><div><span>1</span><p><strong>Upload an APK</strong>Keep customer-authorized test artifacts in a private workspace.</p></div><div><span>2</span><p><strong>Prepare a session</strong>Start a clean Android environment with egress blocked by default.</p></div><div><span>3</span><p><strong>Connect an agent</strong>Give an approved client only the session context and actions it needs.</p></div></div></> : <DocContent page={page.slug} />}</article><aside className="docs-on-page"><p>ON THIS PAGE</p><a href="#overview">Overview</a><a href="#steps">What you need</a><a href="#next">Next steps</a></aside></div><CommandDialog open={searchOpen} onOpenChange={setSearchOpen} title="Search Sulphur docs" description="Find a guide or reference page."><CommandInput placeholder="Search documentation…" /><CommandList><CommandEmpty>No documentation found.</CommandEmpty>{grouped.map(([group, items]) => <CommandGroup heading={group} key={group}>{items.map((item) => <CommandItem key={item.slug} value={`${item.title} ${item.description}`} onSelect={() => open(item.slug)}><FileArchive className="size-4" /><span>{item.title}</span><CommandShortcut>↵</CommandShortcut></CommandItem>)}</CommandGroup>)}</CommandList></CommandDialog></main>
+}
+
+function DocContent({ page }: { page: string }) { const mcp = page === 'install' || page === 'agent-setup' || page === 'mcp'; const title = page === 'quickstart' ? 'Prepare your first session' : page === 'security' ? 'A narrow security boundary' : page === 'policies' ? 'Decide what agents can do' : 'What you need'; return <><h2 id="overview">{title}</h2><p>Sulphur keeps each workflow small and explicit: select the APK, decide the policy, create the isolated session, and connect the agent that your team approved.</p>{mcp && <Card className="docs-code"><div><Terminal className="size-4" /><span>Terminal</span><Button variant="outline" aria-label="Copy command"><Copy className="size-3.5" />Copy</Button></div><code>codex mcp add sulphur -- npx -y @sulphur-ai/mcp --session &lt;session-id&gt;</code></Card>}<h2 id="steps">What you need</h2><ul><li>An authorized Android APK for a development or staging workflow.</li><li>A Sulphur workspace and an approved agent client.</li><li>A decision about network access before the session begins.</li></ul><h2 id="next">Next steps</h2><p>Once the session is running, review the current screen state, connect your agent, and use the audit trail to understand every policy outcome.</p></> }

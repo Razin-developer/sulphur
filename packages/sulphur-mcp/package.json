@@ -1,0 +1,13 @@
+{
+  "name": "@sulphur-ai/mcp",
+  "version": "0.1.0",
+  "description": "Launch the local Sulphur session MCP server.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "sulphur-mcp": "bin/sulphur-mcp.mjs"
+  },
+  "files": ["bin", "README.md"],
+  "engines": { "node": ">=20" },
+  "publishConfig": { "access": "public" }
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.env.local
+.sulphur/
+!.env.example
+
+.vercel
+
+# Android sample project build products and Gradle caches are reproducible.
+example-apk/.gradle/
+example-apk/app/build/

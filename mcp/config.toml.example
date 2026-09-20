@@ -1,0 +1,7 @@
+# Copy into .codex/config.toml in this trusted project. Replace SESSION_ID
+# with the running session ID displayed in Sulphur's Sessions screen.
+[mcp_servers.sulphur]
+command = "npx"
+args = ["tsx", "C:\\Users\\razin\\Desktop\\Products\\Sulphur\\mcp\\server.ts"]
+cwd = "C:\\Users\\razin\\Desktop\\Products\\Sulphur"
+env = { SULPHUR_SESSION_ID = "SESSION_ID" }

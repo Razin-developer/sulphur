@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f8f8f6"/>
+  <circle cx="860" cy="190" r="260" fill="#d9ce22" opacity=".28"/>
+  <rect x="72" y="66" width="1056" height="498" rx="30" fill="#fff" stroke="#deded7"/>
+  <rect x="120" y="116" width="44" height="44" rx="10" fill="#292a24"/>
+  <text x="142" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="700" fill="#dedb49">S</text>
+  <text x="180" y="146" font-family="Inter,Arial,sans-serif" font-size="25" font-weight="700" fill="#292a24">Sulphur</text>
+  <text x="120" y="278" font-family="Inter,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="-2" fill="#292a24">The control plane for</text>
+  <text x="120" y="346" font-family="Inter,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="-2" fill="#71721c">mobile agents.</text>
+  <text x="120" y="410" font-family="Inter,Arial,sans-serif" font-size="24" fill="#6d6e66">Safe, observable Android environments for approved AI agents.</text>
+  <rect x="820" y="240" width="170" height="260" rx="25" fill="#292a24"/>
+  <rect x="833" y="258" width="144" height="225" rx="18" fill="#fafaf5"/>
+  <rect x="875" y="258" width="60" height="12" rx="0" fill="#292a24"/>
+  <rect x="850" y="320" width="70" height="12" rx="6" fill="#d9ce22"/>
+  <rect x="850" y="350" width="100" height="8" rx="4" fill="#e4e4dd"/>
+  <rect x="850" y="385" width="110" height="55" rx="10" fill="#efefe9"/>
+  <rect x="850" y="455" width="110" height="14" rx="7" fill="#292a24"/>
+</svg>
