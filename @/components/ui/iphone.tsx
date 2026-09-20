@@ -79,8 +79,9 @@ export function Iphone({
           <img
             src={src}
             alt=""
-            className="block size-full object-cover object-top"
+            className="block size-full object-contain object-top"
             style={{
+              background: "#090d16",
               transform: `scale(${streamZoom})`,
               transformOrigin: "center center",
             }}
