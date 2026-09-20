@@ -12,5 +12,8 @@
     { "source": "/settings/:path*", "destination": "/resources/contact", "permanent": false },
     { "source": "/admin/:path*", "destination": "/resources/contact", "permanent": false }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

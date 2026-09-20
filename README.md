@@ -81,7 +81,7 @@ Capture these screens for the final hackathon submission after the demo data is 
 Prerequisites: Node.js 20+, PostgreSQL/Supabase connection, Android Studio SDK, and an AVD named `Sulphur_API_30` (or `SULPHUR_AVD_NAME`).
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Razin-developer/sulphur.git
 cd sulphur
 npm run local
 ```
@@ -89,6 +89,24 @@ npm run local
 `npm run local` installs dependencies when needed, creates a safe `.env` template if one is missing, runs database migrations, then starts both the API and Vite app. It never copies, prints, or distributes secrets. Fill the local `.env` values before running it again; `OPENAI_API_KEY` is required only for CoTester runs.
 
 You do not need to manually start ADB or the emulator. Sulphur starts the local Android device when a session is requested.
+
+### Private one-command bootstrap
+
+The Vercel deployment can serve an installer that clones the project, requests the private installer password, writes the managed `.env`, and starts Sulphur. The password and environment bundle are Vercel production environment variables; they are never committed to Git or sent to the browser.
+
+PowerShell:
+
+```powershell
+irm https://sulphur.zydcode.in/install.ps1 | iex
+```
+
+macOS/Linux:
+
+```bash
+curl -fsSL https://sulphur.zydcode.in/install.sh | bash
+```
+
+The installer is intentionally private. Before deploying, configure `INSTALLER_PASSWORD` (set it to `123rusk` if that is the password you want) and `SULPHUR_ENV_BUNDLE_B64` in Vercel Production. The latter is the base64-encoded contents of your local `.env`. Rotate any included credentials if the installer password is shared or lost.
 
 ## Additional Notes
 
@@ -107,4 +125,4 @@ Vercel hosts the public landing/resource/legal pages only. The private product e
 
 ### Security note
 
-Secrets—including database passwords, OAuth credentials, Stripe keys, and `OPENAI_API_KEY`—must remain in local or managed environment variables. The project includes a safe `.env.example` only; it does not include a password gate that reveals real environment files or keys.
+Secrets—including database passwords, OAuth credentials, Stripe keys, and `OPENAI_API_KEY`—must remain in local or managed environment variables. The project includes a safe `.env.example`; the optional private bootstrap service reads the real `.env` only from protected Vercel environment variables after password verification.
