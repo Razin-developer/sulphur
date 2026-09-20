@@ -43,9 +43,21 @@ Sulphur combines an APK library, one-session-at-a-time Android runtime, scoped M
 
 ## Codex / OpenAI Usage
 
-This project was built with Codex as an active development partner: shaping the product architecture, creating the React/Hono/Postgres implementation, debugging emulator and API failures, iterating on the chat UX, validating builds/tests, and preparing deployment/documentation.
+This project was built with **OpenAI Codex** as an active development partner. I used Codex for the product idea and architecture, the React/Hono/Postgres implementation, the Nova Android demo app, emulator and API debugging, chat UX iteration, build/test validation, and this documentation. It made the hackathon build substantially faster by keeping implementation, debugging, testing, and presentation work in one iterative workflow.
 
-CoTester itself uses the OpenAI Responses API. It receives only the current user request plus compact, owner-scoped context; it can call restricted session tools to inspect the Android UI, take a screenshot when visual evidence matters, and perform only snapshot-bound actions. Input and output tokens are converted into Sulphur AI credits after each completed run. The same iterative Codex workflow used to build Sulphur is reflected in the product: plan, use tools, analyze evidence, and report clearly.
+**CoTester** brings that agentic workflow into Sulphur. It uses the OpenAI Responses API with a restricted, session-scoped MCP tool surface: it receives compact owner-scoped context, inspects the Android UI, takes visual evidence when needed, and performs only snapshot-bound actions. Input and output tokens are converted into Sulphur AI credits after each completed run. The aim is to make building and testing Android apps faster and cheaper: less repeated device context for the model, fewer manual emulator loops for the maker, and a clear evidence-based report at the end.
+
+## Benchmark: CoTester MCP workflow vs. direct ADB
+
+The product includes a small, repeatable benchmark of the same safe three-order task. Each condition completed all three orders and returned to Home with an empty cart. The optimized CoTester MCP workflow avoids repeatedly sending raw UI dumps by returning a refreshed, named screen snapshot after each action.
+
+| Condition | Task time | Input tokens | Output tokens | Result |
+| --- | ---: | ---: | ---: | --- |
+| Direct ADB | 207.93 s | 531,673 | 3,883 | 3/3 orders |
+| MCP with redundant snapshots | 220.69 s | 491,216 | 2,318 | 3/3 orders |
+| **CoTester MCP with optimized snapshots** | **160.42 s** | **358,789** | **1,275** | **3/3 orders** |
+
+On this task, optimized snapshots were **1.30× faster** than direct ADB, with **32.5% fewer input tokens** and **67.2% fewer output tokens**. This is a focused product benchmark—not a universal claim about every app, model, device, or test flow—but it shows why compact MCP context can lower cost and speed up agent-driven testing.
 
 ## Demo
 
@@ -63,18 +75,37 @@ The recording walks through the local product experience: Nova APK testing, auto
 
 ## Screenshots
 
-Capture these screens for the final hackathon submission after the demo data is prepared:
+### Landing page
 
-| Screen | What to show |
-| --- | --- |
-| Landing page | Sulphur positioning and call to action |
-| Product page | How the Android test workflow fits together |
-| Why Sulphur | Problem/solution comparison |
-| Apps | Named APK library and session launch control |
-| Sessions | Running and previous sessions with restart actions |
-| Session detail | Padded live Android phone frame and device controls |
-| CoTester | Chat, durable live activity, report cards, and live preview drawer |
-| Admin | Workspace activity and operations controls |
+![Sulphur landing page](./srceenshots/1.png)
+
+### Product workflow
+
+![Sulphur product page](./srceenshots/2.png)
+
+### Why Sulphur
+
+![Why choose Sulphur](./srceenshots/3.png)
+
+### App library
+
+![Nova Interaction Lab in the Sulphur app library](./srceenshots/4.png)
+
+### Sessions
+
+![Sulphur sessions table](./srceenshots/5.png)
+
+### Live Android session
+
+![Sulphur live session detail](./srceenshots/6.png)
+
+### CoTester report
+
+![CoTester evidence-based report](./srceenshots/7.png)
+
+### Admin command center
+
+![Sulphur admin command center](./srceenshots/8.png)
 
 ## How to Run Locally
 
