@@ -51,7 +51,8 @@ CoTester itself uses the OpenAI Responses API. It receives only the current user
 
 ### Live Demo
 
-- Vercel marketing site: _deployment link added after the production deploy_
+- Vercel marketing site: [sulphur.zydcode.in](https://sulphur.zydcode.in)
+- Vercel deployment: [production deployment](https://sulphur-marketing-dbgtvlq9o-razin-developers-projects.vercel.app)
 - Local product app: `http://localhost:5173`
 
 ### Demo / Pitch Video
