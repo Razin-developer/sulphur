@@ -1,7 +1,11 @@
 <resources>
-    <color name="ink">#111827</color>
-    <color name="paper">#FFFBFE</color>
-    <color name="violet">#6D28D9</color>
-    <color name="violet_dark">#4C1D95</color>
-    <color name="mist">#F3E8FF</color>
+    <color name="ink">#182131</color>
+    <color name="muted">#617083</color>
+    <color name="placeholder">#8D99A8</color>
+    <color name="canvas">#F6F8FC</color>
+    <color name="paper">#FFFFFFFF</color>
+    <color name="accent">#5D5FEF</color>
+    <color name="accent_dark">#4144C7</color>
+    <color name="accent_soft">#EEF0FF</color>
+    <color name="line">#DCE2EB</color>
 </resources>
