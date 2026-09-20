@@ -57,9 +57,9 @@ CoTester itself uses the OpenAI Responses API. It receives only the current user
 
 ### Demo / Pitch Video
 
-Add your demo or pitch video link here.
+[Watch the Sulphur demo recording](./docs/demo/sulphur-demo.mp4)
 
-_A short demo/pitch video is strongly recommended. Show the APK upload, automatic emulator startup, a CoTester request, live activity, and the final report._
+The recording walks through the local product experience: Nova APK testing, automatic emulator startup, a CoTester request, live activity, and the final report.
 
 ## Screenshots
 
